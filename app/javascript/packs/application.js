@@ -3,11 +3,6 @@
 // a relevant structure within app/javascript and only use these pack files to reference
 // that code so it'll be compiled.
 
-require("@rails/ujs").start()
-require("turbolinks").start()
-require("@rails/activestorage").start()
-require("channels")
-
 //= require jquery3
 //= require popper
 //= require bootstrap-sprockets
@@ -15,6 +10,20 @@ require("channels")
 //= require activestorage
 //= require turbolinks
 //= require_tree .
+
+// app/javascript/packs/application.js
+//= require bootstrap
+
+import 'bootstrap/dist/js/bootstrap';
+import { createPopper } from '@popperjs/core';
+import $ from 'jquery';
+
+require("@rails/ujs").start();
+require("turbolinks").start();
+require("@rails/activestorage").start();
+require("channels");
+
+global.$ = jQuery;
 
 
 // Uncomment to copy all static images under ../images to the output folder and reference

@@ -1,2 +1,56 @@
-<h1>Posts#show</h1>
-<p>Find me in app/views/posts/show.html.erb</p>
+<div class="container">
+  <div class="card my-4">
+    <div class="card-body">
+      <h2 class="card-title"><%= @post.title %></h2>
+      <p class="card-text"><%= @post.content %></p>
+      <p class="card-text"><small class="text-muted">Created at <%= @post.created_at.strftime("%B %e, %Y") %></small></p>
+    </div>
+  </div>
+
+  <% if user_signed_in? %>
+    <div class="card mt-4">
+      <div class="card-body">
+        <%= form_for([@post, @post.comments.build]) do |f| %>
+          <div class="form-group">
+            <%= f.label :content %>
+            <%= f.text_area :content, class: 'form-control' %>
+          </div>
+          <div class="form-group">
+            <%= f.submit "Post Comment", class: 'btn btn-primary m-2' %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% else %>
+    <div class="alert alert-warning mt-4" role="alert">
+      Please <%= link_to 'sign in', new_user_session_path %> to post a comment.
+    </div>
+  <% end %>
+
+  <div class="mt-4">
+    <h4>Comments</h4>
+    <% if @post.comments.any? %>
+      <% @post.comments.each do |comment| %>
+        <%if comment.user.present? && comment&.created_at.present? %>
+          <div class="card mb-2">
+            <div class="card-body">
+              <p class="card-text"><%= comment.content %></p>
+                <p class="card-text">
+                  <small class="text-muted">
+                    Commented by <%= comment.user.email %> 
+                      at <%= comment.created_at.strftime("%B %e, %Y") %>
+                  </small>
+                </p>
+              <% if comment.user == current_user %>
+                <%= link_to 'Edit', edit_post_comment_path(@post, comment), class: 'btn btn-secondary btn-sm' %>
+                <%= link_to 'Delete', post_comment_path(@post, comment), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm' %>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    <% else %>
+      <p class="text-muted">No comments yet. Be the first to comment!</p>
+    <% end %>
+  </div>
+</div>
