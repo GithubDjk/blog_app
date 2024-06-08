@@ -2,6 +2,7 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :set_post, only: [:show, :edit, :update, :destroy]
+  before_action :authorize_user!, only: [:edit, :update, :destroy]
 
   def index
     @posts = Post.order(created_at: :desc).page(params[:page]).per(5)
@@ -47,6 +48,10 @@ class PostsController < ApplicationController
   end
 
   def post_params
-    params.require(:post).permit(:title, :content)
+    params.require(:post).permit(:title, :content, :image)
+  end
+
+  def authorize_user!
+    redirect_to posts_path, alert: 'Not authorized' unless @post.user == current_user
   end
 end
