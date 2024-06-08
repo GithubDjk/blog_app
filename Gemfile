@@ -31,6 +31,7 @@ gem 'devise', '~> 4.9', '>= 4.9.4'
 gem 'bootstrap', '~> 5.0.2'
 gem 'pry-byebug'
 gem 'jquery-rails', '~> 4.6'
+gem 'kaminari', '~> 1.2', '>= 1.2.2'
 
 group :development, :test do
   gem 'rspec-rails', '~> 5.0.0'

@@ -1,29 +1,30 @@
+# app/controllers/posts_controller.rb
 class PostsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :set_post, only: [:show, :edit, :update, :destroy]
-  before_action :authorize_user!, only: [:edit, :update, :destroy]
 
   def index
-    @posts = Post.all
+    @posts = Post.order(created_at: :desc).page(params[:page]).per(5)
   end
 
   def show
   end
 
   def new
-    @post = Post.new
+    @post = current_user.posts.build
+  end
+
+  def edit
   end
 
   def create
     @post = current_user.posts.build(post_params)
+
     if @post.save
       redirect_to @post, notice: 'Post was successfully created.'
     else
       render :new
     end
-  end
-
-  def edit
   end
 
   def update
@@ -43,10 +44,6 @@ class PostsController < ApplicationController
 
   def set_post
     @post = Post.find(params[:id])
-  end
-
-  def authorize_user!
-    redirect_to posts_path, alert: 'You are not authorized to perform this action.' unless @post.user == current_user
   end
 
   def post_params
