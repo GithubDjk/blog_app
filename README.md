@@ -1,26 +1,30 @@
-# blog_app
-Blog app using rails
-# README
+# BlogApp
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Description
 
-Things you may want to cover:
+BlogApp is a simple blog application built with Ruby on Rails. It allows users to create, read, update, and delete posts. Users can also comment on posts. The application uses Devise for authentication and Bootstrap for styling.
 
-* Ruby version
+## Requirements
 
-* System dependencies
+- Ruby 3.0.2
+- Rails 6.0.6.1
+- PostgreSQL
 
-* Configuration
+## Setup Instructions
 
-* Database creation
+1. Clone the repository:
 
-* Database initialization
+   ```bash
+   git clone https://github.com/yourusername/blog_app.git
+   cd blog_app
 
-* How to run the test suite
+2. Run application:
+   ```bash
+   rails s
 
-* Services (job queues, cache servers, search engines, etc.)
+## Note 
+  Make sure to create the database and migrate correctly to run the application.
 
-* Deployment instructions
-
-* ...
+  ```
+  rails db:create
+  rails db:migrate
